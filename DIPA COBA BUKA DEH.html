@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>anu, iya begitu</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0b1220);
+  background-size: 300% 300%;
+  animation: bg 10s ease infinite;
+  font-family: sans-serif;
+  color: white;
+}
+
+/* BACKGROUND */
+@keyframes bg {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #0b1220;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: introOut 1s ease forwards;
+  animation-delay: 2.5s;
+}
+
+.intro-text {
+  text-align: center;
+  animation: introIn 1.2s ease forwards;
+  opacity: 0;
+}
+
+@keyframes introIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes introOut {
+  to {opacity: 0; visibility: hidden;}
+}
+
+/* LOVE EFFECT */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  width: 10px;
+  height: 10px;
+  background: #f43f5e;
+  transform: rotate(45deg);
+  animation: floatUp 6s linear forwards;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #f43f5e;
+  border-radius: 50%;
+}
+
+.heart::before { top: -5px; left: 0; }
+.heart::after { left: -5px; top: 0; }
+
+@keyframes floatUp {
+  0% {transform: translateY(0) rotate(45deg); opacity: 0;}
+  10% {opacity: 0.6;}
+  100% {transform: translateY(-110vh) rotate(45deg); opacity: 0;}
+}
+
+/* START */
+.start {
+  text-align: center;
+  z-index: 2;
+}
+
+button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 20px;
+  background: #facc15;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* POPUP */
+.letter-box {
+  display: none;
+  width: 85%;
+  max-width: 520px;
+  height: 75vh;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.92);
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+
+  opacity: 0;
+  transform: scale(0.95);
+  transition: 0.6s ease;
+}
+
+.letter-box.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* FOTO */
+.photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+h3 {
+  margin: 5px 0 15px 0;
+}
+
+.letter {
+  text-align: left;
+  line-height: 1.7;
+  white-space: pre-line;
+  min-height: 200px;
+}
+
+/* CURSOR */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  background: white;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  50% {opacity: 0;}
+}
+
+/* BACK BUTTON */
+.back-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-text">
+    <h1>hehe, sabar yaa...</h1>
+    <p>SABARR YAA, BENTAR AJA KOK ‼️‼️</p>
+    <p>umhh... MAAFF KALO JELEKK 😔</p>
+  </div>
+</div>
+
+<!-- START -->
+<div class="start" id="start">
+  <h2>HAAWOOOOO DIPAAAA⁉️‼️😝</h2>
+  <p>aku bikin nya lama woi, kalo jelek yaudah WKWKWKKW</p>
+  <button onclick="openLetter()">anu, coba buka deh</button>
+</div>
+
+<!-- LETTER -->
+<div class="letter-box" id="letterBox">
+
+  <button class="back-btn" onclick="goBack()">← Back</button>
+
+  <img src="https://i.ibb.co.com/99DzRZht/foto.jpg" alt="foto" border=""></a>
+  <h3>Faiha Lubna Nadhifa</h3>
+
+  <div class="letter" id="text"></div><span class="cursor"></span>
+
+</div>
+
+<script>
+
+/* INTRO AUTO HIDE */
+setTimeout(() => {
+  document.getElementById("intro").style.display = "none";
+}, 3000);
+
+/* LOVE */
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 200);
+
+/* TEXT */
+const textContent = `AKU MAU BILANG.....
+aku bangga banget sama kamu, aku seneng banget bisa ketemu kamu, and aku selalu berharap ketemu pasangan seperti kamu, AKUUU SAYANGG BANGETT SAMA KAMUUU, tapi..... memang masa kita bukan sekarang deh... aku bersalah karna udah ngebuat kamu sering nangis, sedih, khawatir, bahkan sampai di marahin orang tua kamu and mas mu, aku ngerasa bersalah banget karna udah lakuin itu, jujur aku turut sedih karna kamu diberi pressure sebegitu banyaknya dari ortu mu ataupun mas mu.. semoga semua hall yang kamu inginkan segalanya tercapai, semoga semua hall yang kamu doakan segera tercapai, and, kamu ikut banyak lomba ya???, pasti susah banget 😔, aku turut senang karna dipa bisa nyoba yang terbaik buat kita, aku senang dipa udah mencoba segala hall untuk keberlanjutan kita, aku seneng banget, SENENGGG BANGET, MAKASIII karna uda nyoba buat berusaha sekuat mungkin, AKU SENENGGGG BANGETTTT. OIYAA, kamuu mau ikut SNBP yaa????, SEMOGAA KAMU KETERIMAAA DI UNIV YANG KAMU PENGENNN, anddd, KAMU BISA BEBASSSS LAGIII DARI HALL HALL YANG UDAH DI KEKANG AKUU ATAU KELUARGA MUU, WISHH U ALL THE BESTTTT DIPAAAAA, AKU SAYANG SAYANG SAYANG BANGET SAMA KAMUUUU, TERIMAKASIHHHH BANYAK ATAS SEMUANYAAAAAA ‼️‼️‼️‼️‼️‼️‼️`;
+
+let i = 0;
+let started = false;
+
+/* OPEN */
+function openLetter(){
+  document.getElementById("start").style.display = "none";
+
+  const box = document.getElementById("letterBox");
+  box.style.display = "block";
+
+  setTimeout(() => box.classList.add("show"), 50);
+
+  if(!started){
+    started = true;
+    typeText();
+  }
+}
+
+/* BACK */
+function goBack(){
+  const box = document.getElementById("letterBox");
+  box.classList.remove("show");
+
+  setTimeout(() => {
+    box.style.display = "none";
+    document.getElementById("start").style.display = "block";
+  }, 500);
+}
+
+/* TYPING */
+function typeText(){
+  const el = document.getElementById("text");
+
+  function type(){
+    if(i < textContent.length){
+      el.innerHTML += textContent.charAt(i);
+      i++;
+      setTimeout(type, 15);
+    }
+  }
+
+  type();
+}
+
+</script>
+
+</body>
+</html>
